@@ -25,7 +25,11 @@ SECRET_KEY = 'hou6)137*076s&)s$8-0#l#w1gcp*r(_*q8pyoy%(mudxb-gb-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+'''
+장고 서버를 외부에 서비스 하려면 ALLOWED_HOSTS항목을 설정해야함.
+'''
+ALLOWED_HOSTS = ['3.36.188.8']
+
 
 
 # 메일을 호스트하는 서버
