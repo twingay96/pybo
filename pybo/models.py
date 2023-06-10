@@ -29,18 +29,25 @@ class Question(models.Model):
 
     def __str__(self):
         return self.subject
-
+    '''
     @staticmethod
     def order_by_so(question_list, so):
         if so == 'recommend':
-            # aggretation, annotation에는 relationship에 대한 역방향 참조도 가능 (ex. Count('voter'))
+            
+            # annotate()는 필드 하나를 만들고 거기에 '어떤 내용'을 채우게 만드는 것이다. 
+            # 엑셀에서 컬럼 하나를 만드는 것과 같다고 보면 된다. 내용에는 
+            # 1. 다른 필드의 값을 그대로 복사하거나, 2. 다른 필드의 값들을 조합한 값을 넣을 수 있다.
+            
             question_list = question_list.annotate(num_voter=Count('voter')).order_by('-num_voter', '-create_date')
+            # Count('voter')는 voter의 개수가 담기는 새로운 필드를 만든다음 그 필드를 num_voter라고 명명한다.
+            # order_by('-num_voter', '-create_date') : annotate에서 정의한 num_voter을 기준으로 정렬한다.
         elif so == 'popular':
             question_list = question_list.annotate(num_answer=Count('answer')).order_by('-num_answer', '-create_date')
         else:  # so == 'recent':
             question_list = question_list.order_by('-create_date')
 
         return question_list
+    '''
 
     def get_absolute_url(self):
         return reverse('pybo:detail', args=[self.id])
@@ -49,6 +56,7 @@ class Question(models.Model):
     def update_counter(self):
         self.seen_cnt = self.seen_cnt+1
         self.save()
+        # return self.seen_cnt
     # https://integer-ji.tistory.com/247
 
 

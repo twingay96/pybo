@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Count
 from pybo.models import Answer, Category, Question
 
 
@@ -16,7 +16,21 @@ def index(request, category_name='qna'):
 
     category_list = Category.objects.all()
     category = get_object_or_404(Category, name=category_name)
-    question_list = Question.order_by_so(Question.objects.filter(category=category), so)
+    question_list = Question.objects.filter(category=category)
+
+    if so == 'recommend':
+
+        # annotate()는 필드 하나를 만들고 거기에 '어떤 내용'을 채우게 만드는 것이다.
+        # 엑셀에서 컬럼 하나를 만드는 것과 같다고 보면 된다. 내용에는
+        # 1. 다른 필드의 값을 그대로 복사하거나, 2. 다른 필드의 값들을 조합한 값을 넣을 수 있다.
+        question_list =question_list.annotate(num_voter=Count('voter')).order_by('-num_voter', '-create_date')
+        # Count('voter')는 voter의 개수가 담기는 새로운 필드를 만든다음 그 필드를 num_voter라고 명명한다.
+        # order_by('-num_voter', '-create_date') : annotate에서 정의한 num_voter을 기준으로 정렬한다.
+    elif so == 'popular':
+        question_list = question_list.annotate(num_answer=Count('answer')).order_by('-num_answer', '-create_date')
+    else:  # so == 'recent':
+        question_list = question_list.order_by('-create_date')
+
     if kw:
         question_list = question_list.filter(
             Q(subject__icontains=kw) |  # 제목 검색
