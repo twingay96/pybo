@@ -21,6 +21,11 @@
                 <a class="nav-link" href="{% url 'password_reset'  %}">비밀번호찾기</a>
                  {% endif %}
             </li>
+            <li>
+                {% if not user.is_authenticated %}
+                <a class="nav-link" href="{% url 'common:signup' %}">회원가입</a>
+                {% endif %}
+            </li>
         </ul>
     </div>
 </nav>
