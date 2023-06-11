@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -29,6 +29,7 @@ DEBUG = True
 장고 서버를 외부에 서비스 하려면 ALLOWED_HOSTS항목을 설정해야함.
 '''
 ALLOWED_HOSTS = ['3.36.188.8']
+# http://3.36.188.8:8000/
 
 
 
