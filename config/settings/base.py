@@ -69,6 +69,8 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver',
+
 ]
 
 AUTHENTICATION_BACKENDS = {
@@ -88,7 +90,8 @@ SOCIALACCOUNT_PROVIDERS = {
         'AUTH_PARAMS': {
             'access_type': 'online',
         }
-    }
+    },
+
 }
 
 MIDDLEWARE = [
